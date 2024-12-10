@@ -621,7 +621,7 @@ void ADIOI_IOStridedColl(ADIO_File fd, void *buf, int count, int rdwr,
 
     if (fd->is_agg) {
         if (buffered_io_size > 0)
-            MPI_Type_free(&agg_dtype);
+            //MPI_Type_free(&agg_dtype);
         for (i = 0; i < nprocs; i++) {
             MPI_Type_free(&client_comm_dtype_arr[i]);
             ADIOI_Free(client_file_view_state_arr[i].flat_type_p->indices);

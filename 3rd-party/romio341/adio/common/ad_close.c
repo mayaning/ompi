@@ -81,14 +81,17 @@ void ADIO_Close(ADIO_File fd, int *error_code)
     if (fd->hints->cb_pfr == ADIOI_HINT_ENABLE) {
         /* AAR, FSIZE, and User provided uniform File realms */
         if (1) {
-            MPI_Type_free(&fd->file_realm_types[0]);
+            if (fd->file_realm_types)
+                MPI_Type_free(&fd->file_realm_types[0]);
         } else {
             for (i = 0; i < fd->hints->cb_nodes; i++) {
                 MPI_Type_free(&fd->file_realm_types[i]);
             }
         }
-        ADIOI_Free(fd->file_realm_st_offs);
-        ADIOI_Free(fd->file_realm_types);
+        if (fd->file_realm_st_offs)
+            ADIOI_Free(fd->file_realm_st_offs);
+        if (fd->file_realm_types)
+            ADIOI_Free(fd->file_realm_types);
     }
     ADIOI_Free(fd->hints);
 
