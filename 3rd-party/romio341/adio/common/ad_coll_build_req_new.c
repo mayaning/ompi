@@ -219,10 +219,15 @@ int ADIOI_init_view_state(int file_ptr_type, int nprocs, view_state * view_state
          * byte_off bytes.  Since we only do this in the beginning, we
          * make the assumption that pieces are added whole until the last
          * piece which MAY be partial. */
+        #if 0
         while (tmp_off_used != tmp_view_p->byte_off) {
             view_state_add_region(tmp_view_p->byte_off - tmp_off_used,
                                   &(view_state_arr[i]), &st_reg, &tmp_reg_sz, op_type);
         }
+        #else
+        view_state_add_region(tmp_view_p->byte_off - tmp_off_used,
+                                &(view_state_arr[i]), &st_reg, &tmp_reg_sz, op_type);
+        #endif
 
         /* Re-initialize the cur_size so that the abs_off was set to
          * the proper position while the actual size = 0.*/
